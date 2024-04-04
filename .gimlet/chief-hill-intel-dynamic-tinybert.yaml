@@ -1,0 +1,37 @@
+app: intel-dynamic-tinybert
+env: chief-hill
+namespace: default
+chart:
+  repository: https://chart.onechart.dev
+  name: onechart
+  version: 0.64.0
+values:
+  containerPort: 8080
+  gitRepository: YoucefGuichi/intel-dynamic-tinybert
+  gitSha: '{{ .SHA }}'
+  image:
+    dockerfile: Dockerfile
+    repository: 127.0.0.1:32447/{{ .APP }}
+    tag: '{{ .SHA }}'
+  imagePullSecrets: []
+  livenessProbe:
+    enabled: false
+    path: /
+    settings:
+      failureThreshold: 3
+      initialDelaySeconds: 0
+      periodSeconds: 10
+      successThreshold: 1
+      timeoutSeconds: 3
+  probe:
+    enabled: false
+    path: /
+    settings:
+      failureThreshold: 3
+      initialDelaySeconds: 0
+      periodSeconds: 10
+      successThreshold: 1
+      timeoutSeconds: 3
+  replicas: 1
+  resources:
+    ignoreLimits: true
